@@ -73,28 +73,30 @@ int mpi() {
   cout << "Кол-во шагов N" << endl;
   double C = 0;
   double MaxC[3];
-  MaxC[0] = abs(massC[0][1]) + abs(massC[0][2]);
-  MaxC[1] = abs(massC[1][0]) + abs(massC[1][2]);
-  MaxC[2] = abs(massC[2][0]) + abs(massC[2][1]);
-  if ((MaxC[0] >= MaxC[1]) && (MaxC[0] >= MaxC[2])) {
-    C = MaxC[0];
-  } else if ((MaxC[1] >= MaxC[0]) && (MaxC[1] >= MaxC[2])) {
-    C = MaxC[1];
-  } else if ((MaxC[2] >= MaxC[1]) && (MaxC[2] >= MaxC[0])) {
-    C = MaxC[2];
-  }
   double B = 0;
   double MaxB[3];
   for (int i = 0; i < a; i++) {
+    for (int j = 0; j < a; j++) {
+      MaxC[i] += abs(massC[i][j]);
+    }
+  }
+  for (int i = 0; i < a; i++) {
+    for (int j = 0; j < a; j++) {
+      if (MaxC[i] >= MaxC[j])
+        C = MaxC[i];
+    }
+  }
+  for (int i = 0; i < a; i++) {
     MaxB[i] = abs(massB[i]);
   }
-  if ((MaxB[0] >= MaxB[1]) && (MaxB[0] >= MaxB[2])) {
-    B = MaxB[0];
-  } else if ((MaxB[1] >= MaxB[0]) && (MaxB[1] >= MaxB[2])) {
-    B = MaxB[1];
-  } else if ((MaxB[2] >= MaxB[0]) && (MaxB[2] >= MaxB[1])) {
-    B = MaxB[2];
+  for (int i = 0; i < a; i++) {
+    for (int j = 0; j < a; j++) {
+      if (MaxB[i] >= MaxB[j])
+        B = MaxB[i];
+    }
   }
+  cout << "C=" << C << endl;
+  cout << "B=" << B << endl;
   double N = (((log(pow(10, -4) * (1 - C) / B))) / (log(C))) + 1;
   cout << "N = " << N << endl;
   return 0;

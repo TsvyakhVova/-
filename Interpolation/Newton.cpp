@@ -9,47 +9,60 @@ int fact(int x) {
     f *= i;
   }
   x = f;
-  // cout << x << endl;
   return x;
 }
 
 int Newton() {
   setlocale(LC_ALL, "RUS");
   double X = 1.69;
-  double x[4] = {1, 1.5, 2, 2.5};
-  double y[4] = {1.0000, 1.2247, 1.4142, 1.5811};
-  double Y1[4] = {0, 0, 0, 0};
-  double Y2[4] = {0, 0, 0, 0};
-  double Y3[4] = {0, 0, 0, 0};
+  const int a = 4;
+  const int b = 3;
+  double x[a] = {1, 1.5, 2, 2.5};
+  double y[a] = {1.0000, 1.2247, 1.4142, 1.5811};
+  double Y[a][b] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
   cout << "Составим таблицу конечных разностей" << endl;
-  for (int i = 3; i >= 1; i--) {
-    Y1[i - 1] = y[i] - y[i - 1];
+  double yy[a] = {0, 0, 0, 0};
+  for (int i = 0; i < a; i++) {
+    yy[i] = y[i];
   }
-  for (int i = 2; i >= 1; i--) {
-    Y2[i - 1] = Y1[i] - Y1[i - 1];
+  int B = b;
+  for (int i = 0; i < a; i++) {
+    for (int j = B - 1; j >= 0; j--) {
+      Y[j][i] = yy[j + 1] - yy[j];
+    }
+    if (i >= 0) {
+      for (int k = 0; k < a; k++) {
+        yy[k] = Y[k][i];
+      }
+    }
+    B -= 1;
   }
-  for (int i = 1; i >= 1; i--) {
-    Y3[i - 1] = Y2[i] - Y2[i - 1];
+  for (int i = 0; i < a; i++) {
+    for (int j = 0; j < b; j++) {
+      cout << Y[i][j] << " ";
+    }
+    cout << endl;
   }
-  for (int i = 0; i < 4; i++) {
-    cout << x[i] << "\t" << y[i] << "\t" << Y1[i] << "\t" << Y2[i] << "\t"
-         << Y3[i] << endl;
+  cout << "Первая фомула Ньютона" << endl;
+  double p = 0;
+  double q = 1.38;
+  double per = 1;
+  double P = 0;
+  for (int i = 0; i < b; i++) {
+    p = (Y[0][i] / fact(i + 1));
+    if (i > 0) {
+      for (int j = 1; j <= i; j++) {
+        per *= (q - j);
+      }
+    }
+    q *= per;
+    p *= q;
+    P += p;
+    cout << P << endl;
   }
-  double h = 0.5;
-  double q = (X - x[0]) / h;
-  // cout << q << endl;
-  cout << "Первая формула Ньютона" << endl;
-  double P = y[0] + ((Y1[0] / fact(1)) * q) +
-             ((Y2[0] / fact(2)) * (q * (q - 1))) +
-             (Y3[0] / fact(3)) * (q * (q - 1) * (q - 2));
+  P += y[0];
   cout << P << endl;
   cout << "Вторая формула Ньютона" << endl;
-  int n = 3;
-  double Q = (X - x[3]) / h;
-  double P2 = y[n] + ((Y1[n - 1] / fact(1)) * Q) +
-              ((Y2[n - 2] / fact(2)) * (Q * (Q + 1))) +
-              (Y3[n - 3] / fact(3)) * (Q * (Q + 1) * (Q + 2));
-  cout << P2 << endl;
   return 0;
 }
 
