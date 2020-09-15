@@ -38,12 +38,6 @@ int Langrage() {
     P += F[i];
   }
   cout << P << endl;
-  cout << "Найдем погрешности учечения, округления и реальную" << endl;
-  double M = 15.0 / 16.0;
-  double Ey = (M / fact(4)) * ((X - 1) * (X - 2) * (X - 3) * (X - 4));
-  double Eo = 5 * pow(10, -5);
-  double Er = Ey + Eo;
-  cout << Er << endl;
   return 0;
 }
 

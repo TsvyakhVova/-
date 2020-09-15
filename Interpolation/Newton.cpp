@@ -30,25 +30,24 @@ int Newton() {
     for (int j = B - 1; j >= 0; j--) {
       Y[j][i] = yy[j + 1] - yy[j];
     }
-    if (i >= 0) {
-      for (int k = 0; k < a; k++) {
-        yy[k] = Y[k][i];
-      }
+    for (int k = 0; k < a; k++) {
+      yy[k] = Y[k][i];
     }
     B -= 1;
   }
   for (int i = 0; i < a; i++) {
+    cout << y[i] << "\t";
     for (int j = 0; j < b; j++) {
-      cout << Y[i][j] << " ";
+      cout << Y[i][j] << "\t";
     }
     cout << endl;
   }
   cout << "Первая фомула Ньютона" << endl;
   double p = 0;
-  double q = 1.38;
-  double per = 1;
   double P = 0;
   for (int i = 0; i < b; i++) {
+    double per = 1.0;
+    double q = (X - x[0]) / (x[a - 1] - x[a - 2]);
     p = (Y[0][i] / fact(i + 1));
     if (i > 0) {
       for (int j = 1; j <= i; j++) {
@@ -57,12 +56,38 @@ int Newton() {
     }
     q *= per;
     p *= q;
+    cout << "P"
+         << "[" << i + 1 << "]= " << p << endl;
     P += p;
-    cout << P << endl;
+    q = 0;
+    per = 0;
   }
   P += y[0];
-  cout << P << endl;
+  cout << "P= " << P << endl;
   cout << "Вторая формула Ньютона" << endl;
+  double P1 = 0;
+  double p1 = 0;
+  int t = b;
+  for (int i = 0; i < b; i++) {
+    double k = 1.0;
+    double Q = (X - x[a - 1]) / (x[a - 1] - x[a - 2]);
+    p1 = Y[t - 1][i] / fact(i + 1);
+    if (i > 0) {
+      for (int j = 1; j <= i; j++) {
+        k *= (Q + j);
+      }
+    }
+    Q *= k;
+    p1 *= Q;
+    cout << "P"
+         << "[" << i + 1 << "]= " << p1 << endl;
+    P1 += p1;
+    t -= 1;
+    Q = 0;
+    k = 0;
+  }
+  P1 += y[a - 1];
+  cout << "P1= " << P1 << endl;
   return 0;
 }
 
