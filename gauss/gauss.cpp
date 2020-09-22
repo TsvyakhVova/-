@@ -17,8 +17,31 @@ int gauss() {
     }
     cout << endl;
   }
+  double M[1][b];
+  int J = 0;
+  cout << endl;
   double del[a];
   for (int i = 0; i < b - 2; i++) {
+    if (abs(mass[i + 1][J]) > abs(mass[0][J])) {
+      for (int i = 0; i < 1; i++) {
+        for (int j = 0; j < b; j++) {
+          M[i][j] = mass[i][j];
+          mass[i][j] = mass[i + 1][j];
+          mass[i + 1][j] = M[i][j];
+        }
+      }
+    }
+    J += 1;
+    cout << endl;
+    for (int i = 0; i < a; i++) {
+      for (int j = 0; j < b; j++) {
+        if (j == 3) {
+          cout << "|";
+        }
+        cout << mass[i][j] << "\t";
+      }
+      cout << endl;
+    }
     for (int j = i + 1; j < a; j++) {
       del[j - 1] = mass[j][i] / mass[i][i];
       if (del[j - 1] < 0) {

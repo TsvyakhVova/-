@@ -5,7 +5,7 @@ def derivative(pow, per):
     x = symbols('x')
     der1 = diff(x**pow-per)
     return der1
-
+## x^2-3 
 
 def Newton():
     f = derivative(2, 3)
